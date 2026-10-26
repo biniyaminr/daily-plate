@@ -1,11 +1,29 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { SiteHeader } from '@/components/site-header';
 import { getVerifiedUser } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
 
 // Public page: describes the site only. No logs, weights or backups appear here.
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | undefined>>;
+}) {
+  // Supabase falls back to the Site URL (this page) when an email link's
+  // redirect isn't allow-listed. Finish the sign-in instead of ignoring it.
+  const { code, token_hash: tokenHash, type } = await searchParams;
+  if (code || (tokenHash && type)) {
+    const params = new URLSearchParams({ next: '/app' });
+    if (code) params.set('code', code);
+    if (tokenHash && type) {
+      params.set('token_hash', tokenHash);
+      params.set('type', type);
+    }
+    redirect(`/auth/confirm?${params}`);
+  }
+
   const { user } = await getVerifiedUser();
 
   return (

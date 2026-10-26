@@ -12,7 +12,6 @@
 # Generated builds and framework state
 /dist/
 /.next/
-/.vinext/
 /out/
 next-env.d.ts
 *.tsbuildinfo
@@ -28,12 +27,9 @@ yarn-error.log*
 
 # Local environment and keys
 .env*
+!.env.example
 .dev.vars*
 *.pem
-
-# Checkout-local tool state
-/.wrangler/
-/.sites-runtime/
 
 # Workspace scaffolding and publication archives
 /.agents/
@@ -43,3 +39,8 @@ yarn-error.log*
 
 # OS metadata
 .DS_Store
+
+# Personal data: never commit backups or exports
+*backup*.json
+benji-daily-plate-*.json
+.vercel

@@ -1,0 +1,70 @@
+/* Usability layer on top of the original design: cloud status, import dialog,
+   readable small text and comfortable tap targets. Loaded after the original CSS. */
+
+/* ---- Cloud status bar ---- */
+.cloudbar{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin:0 0 20px;padding:10px 14px;border:1px solid #ced8c6;border-radius:12px;background:#eef3e6;color:#31462c;font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.cloudtext{display:flex;align-items:center;gap:10px;flex:1 1 260px}
+.clouddot{width:10px;height:10px;border-radius:50%;background:#7f9a6b;flex-shrink:0}
+.cloudbar[data-state=saving] .clouddot,.cloudbar[data-state=loading] .clouddot{background:#c9a24a;animation:plate-pulse 1s infinite alternate}
+.cloudbar[data-state=offline]{background:#f6f1e4;border-color:#e2d6b5;color:#5d4b1d}.cloudbar[data-state=offline] .clouddot{background:#c9a24a}
+.cloudbar[data-state=error],.cloudbar[data-state=signedout]{background:#fbecea;border-color:#efc9c3;color:#7d2418}.cloudbar[data-state=error] .clouddot,.cloudbar[data-state=signedout] .clouddot{background:#b8442f}
+.cloudbar[data-state=conflict]{background:#fdf1e2;border-color:#ecc994;color:#6d3f08}.cloudbar[data-state=conflict] .clouddot{background:#d0802b}
+#cloudActions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#cloudActions form{margin:0}
+#cloudActions button,#cloudActions a{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;font:inherit;font-size:13px;color:#31462c;background:#fff;border:1px solid #c5d0bf;border-radius:8px;text-decoration:none;cursor:pointer;width:auto;margin:0}
+#cloudActions .strong{background:#486139;border-color:#486139;color:#fff}
+@keyframes plate-pulse{from{opacity:.4}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.cloudbar .clouddot{animation:none!important}}
+body.plate-blocked main>:not(.cloudbar){display:none}
+
+/* ---- Import dialog ---- */
+.importdialog{border:1px solid #e3e7db;border-radius:18px;padding:24px;width:520px;max-width:calc(100% - 24px);color:#273a2d;font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.importdialog::backdrop{background:#1f302c66}
+.importdialog h2{font:26px Georgia,serif;margin:0 0 8px}
+.importdialog p{margin:8px 0}
+.importdialog .small{font-size:13px;color:#646d60}
+.importdialog .callout{font-size:14px;line-height:1.5;color:#6d3f08;background:#fdf1e2;border-radius:10px;padding:12px;margin:12px 0}
+.importsummary,.importerrors{padding-left:20px;margin:12px 0}
+.importsummary li,.importerrors li{margin:6px 0}
+.importdialog fieldset{border:1px solid #e3e7db;border-radius:12px;padding:12px 14px;margin:14px 0;display:grid;gap:10px}
+.importdialog legend{font-weight:600;padding:0 6px}
+.importdialog .check{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.importdialog .check input{width:20px;height:20px;margin-top:2px;flex-shrink:0}
+.replaceconfirm{display:grid;gap:6px;font-size:14px;font-weight:600}
+.replaceconfirm[hidden]{display:none}
+.replaceconfirm input{min-height:44px;padding:8px 10px;border:1px solid #cdd4c6;border-radius:8px;font-size:16px}
+.importresult{min-height:1.5em;font-weight:600}
+.importbuttons{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:12px}
+.importdialog .primary,.importdialog .secondary{display:inline-flex;align-items:center;justify-content:center;width:auto;min-height:44px;margin:0;padding:0 18px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer}
+.importdialog .primary{background:#486139;color:#fff;border:0}
+.importdialog .secondary{background:#fff;color:#486139;border:1px solid #cdd4c6}
+.importdialog button:disabled{opacity:.6;cursor:progress}
+
+/* ---- Readability: the original used 8–11px text in places ---- */
+.small,.callout,.sethead,.weeknav small,.timerbtn,.planNote,.personal,.profileCard small,.heroMark small,#timer>span{font-size:max(12px,1em)}
+.small,.callout{font-size:13px}
+.secondary,.primary{font-size:14px}
+.result small,.foodinfo small,.mealname small,.sub{font-size:12px}
+
+/* ---- Comfortable tap targets ---- */
+.timerbtn{min-height:40px}
+.setrow input[type=number]{min-height:42px}
+.setrow input[type=checkbox],.mealitem input[type=checkbox],.check input[type=checkbox]{width:22px;height:22px}
+.weeknav button{min-height:52px}
+.backlink{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
+nav .navmacros span:after{content:none}
+
+@media(max-width:760px){
+  input,select,textarea{font-size:16px}
+  nav button,nav a{min-height:48px;align-items:center;justify-content:center;flex-direction:column;gap:2px}
+  nav span,nav a span{font-size:11px}
+  .weeknav small{font-size:10px}
+  .weeknav button{font-size:12px}
+  .secondary{font-size:13px;padding:11px 14px}
+  .setrow,.sethead{grid-template-columns:28px 1fr 1fr 40px}
+  .cloudbar{font-size:13px}
+  #cloudActions button,#cloudActions a{min-height:44px}
+}
+.importdialog .callout p{margin:4px 0}
+.importdiffs{margin:6px 0;padding-left:20px}
+.importdiffs li{margin:3px 0}

@@ -68,11 +68,12 @@ pnpm dev                         # http://localhost:3000
 1. **Create a project.** On supabase.com, create a new project (the free plan is fine). Pick a region close to Addis Ababa, such as Frankfurt (eu-central-1).
 2. **Create the tables.** Open **SQL Editor**, paste in all of `supabase/migrations/20261026000000_progress.sql`, and run it.
 3. **Set the sign-in URLs.** Go to **Authentication → URL Configuration**:
-   - Site URL: `https://binyam.site`
+   - Site URL: `https://www.biniyam.site` (the bare domain redirects to `www`)
    - Redirect URLs:
-     - `https://binyam.site/**`
-     - `https://www.binyam.site/**`
+     - `https://biniyam.site/**`
+     - `https://www.biniyam.site/**`
      - `http://localhost:3000/**`
+     - `https://daily-plate-sooty.vercel.app/**`
      - `https://*-biniyaminrs-projects.vercel.app/**` (Vercel preview deployments)
 4. **Turn on sign-up.** Go to **Authentication → Sign In / Providers → Email** and keep "Confirm email" on.
 5. **Make email links work on any device.** In **Authentication → Emails → Templates**, replace the link in these two templates:
@@ -92,7 +93,7 @@ emails, set up custom SMTP under **Authentication → Emails → SMTP Settings**
 2. Under **Settings → Environment Variables**, add these for Production, Preview and Development:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-3. Under **Settings → Domains**, add `binyam.site` and `www.binyam.site`. Set one to redirect to the other, then add the DNS records Vercel shows at your registrar. Leave any other DNS records alone.
+3. Under **Settings → Domains**, add `biniyam.site` and `www.biniyam.site`. Set one to redirect to the other, then add the DNS records Vercel shows at your registrar. Leave any other DNS records alone.
 4. Redeploy after changing environment variables, so the build picks them up.
 
 ## Tests
@@ -122,12 +123,12 @@ pages and the real API handler with an in-memory store and a fixed test user.
 
 The old site kept data either in its own database (signed in with ChatGPT) or
 in that browser only. Neither carries over automatically: a browser keeps saved
-data separately for each website, so binyam.site cannot see the old site's.
+data separately for each website, so biniyam.site cannot see the old site's.
 
 1. On the old site, open **My progress** and choose **Download backup**. If you
    used it without signing in, use **Download browser backup** on the device
    where you logged things.
-2. Sign in on binyam.site. **Import before logging anything new.** Otherwise the
+2. Sign in on biniyam.site. **Import before logging anything new.** Otherwise the
    new account creates its own profile (with today's start date), and the
    import keeps the account's values where they differ.
 3. Choose **Import backup**, either in the top bar or under **My progress**, and
@@ -143,7 +144,7 @@ data separately for each website, so binyam.site cannot see the old site's.
 6. The confirmation lists exactly what was added. Check your other devices: the
    records are there after a refresh.
 
-Keep the old site and its data until you have checked everything on binyam.site.
+Keep the old site and its data until you have checked everything on biniyam.site.
 
 ## Recovering an earlier version
 

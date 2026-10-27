@@ -75,7 +75,7 @@ createServer(async (req, res) => {
       res.writeHead(200, { 'content-type': types['.html'], 'cache-control': 'no-store' });
       return res.end(html);
     }
-    if (url.pathname.startsWith('/plate/') || url.pathname === '/favicon.svg') {
+    if (url.pathname.startsWith('/plate/') || ['/favicon.svg', '/logo.svg'].includes(url.pathname)) {
       const file = path.join(root, 'public', path.normalize(url.pathname));
       if (!file.startsWith(path.join(root, 'public'))) throw new Error('bad path');
       res.writeHead(200, { 'content-type': types[path.extname(file)] ?? 'application/octet-stream' });

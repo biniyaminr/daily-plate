@@ -137,9 +137,11 @@ nav .navmacros span:after{content:none}
 .recentfood:hover{background:#edf3e5}
 .recentfood small{color:#768077;font-size:11px}
 
-/* ---- Brand name in Ge'ez script ---- */
+/* ---- Brand: injera logo and wordmark ---- */
 .brand>span.brandname,.brand .brandname{background:none;color:inherit;padding:0;border-radius:0}
-.brandname{font-weight:600;font-family:"Noto Serif Ethiopic","Noto Sans Ethiopic","Kefa","Abyssinica SIL","Nyala",Georgia,serif;letter-spacing:0}
+.brandname{font-weight:600;font-family:Georgia,serif;letter-spacing:-.5px}
+.brand img.logo,.brand img.logoimg{border-radius:11px;flex-shrink:0;display:block}
+.brand img.logoimg{width:40px;height:40px}
 
 @media(max-width:560px){
   .weekgrid{gap:4px}
@@ -147,3 +149,23 @@ nav .navmacros span:after{content:none}
   .weekcell i{width:7px;height:7px}
   .streakbadge{width:54px;height:54px;font-size:19px}
 }
+
+/* ---- Plan setup ---- */
+.setupform{display:grid;gap:16px;max-width:760px}
+.setupform label{display:grid;gap:6px;font-weight:600}
+.setupform select{min-height:46px;padding:8px 10px;border:1px solid #d6dccd;border-radius:10px;background:#fff;font:inherit;color:inherit}
+.setupform .optional{font-weight:400;color:#7b8376}
+.goalpick{border:0;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.goalpick legend{font-weight:600;margin-bottom:8px;padding:0}
+.goalcard{display:flex!important;gap:10px;align-items:flex-start;padding:14px;border:1.5px solid #e3e7db;border-radius:14px;background:#fff;cursor:pointer;font-weight:400!important}
+.goalcard:has(input:checked){border-color:#486139;background:#f2f6ea}
+.goalcard input{width:18px;height:18px;min-height:0;flex:0 0 auto;margin:3px 0 0;padding:0;accent-color:#486139}
+.goalcard b{display:block;margin-bottom:2px}
+.goalcard small{color:#6b7466;font-size:13px;line-height:1.45}
+.setupbuttons{display:flex;flex-wrap:wrap;gap:10px}
+#setupPreview .small{display:inline-block;margin-top:6px}
+
+/* ---- Meal plan totals ---- */
+.plantotal{margin:4px 0 12px;font-weight:600;color:#31462c}
+.fastbadge{display:inline-block;margin-left:4px;padding:2px 10px;border-radius:999px;background:#eef3e6;border:1px solid #c8d6b4;font-size:12px;font-weight:600}
+.mealkcal{display:block;margin:2px 0 6px;color:#61704f;font-size:12px;font-weight:600}

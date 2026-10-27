@@ -13,7 +13,7 @@
     return sorted.length ? (sorted[0] === sorted.at(-1) ? sorted[0] : `${sorted[0]} to ${sorted.at(-1)}`) : null;
   }
 
-  const LABELS = { weight: 'starting weight', height: 'height', start: 'program start date', walk: 'walking target', note: 'note', sleep: 'sleep', recovery: 'recovery day', goals: 'daily targets' };
+  const LABELS = { weight: 'starting weight', height: 'height', start: 'program start date', walk: 'walking target', note: 'note', sleep: 'sleep', recovery: 'recovery day', goals: 'daily targets', name: 'name', goal: 'goal', sex: 'sex', age: 'age', activity: 'activity level', fasting: 'fasting days' };
   const show = (v) => (v === null || v === undefined ? 'empty' : typeof v === 'object' ? JSON.stringify(v) : String(v));
 
   /** Values present in both copies that differ, described for people. Pure. */

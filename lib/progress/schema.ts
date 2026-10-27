@@ -44,6 +44,13 @@ export const fitnessSchema = z.object({
     height: num(100, 250),
     start: isoDate,
     walk: num(0, 300),
+    // Personal plan settings. Optional so older records and backups stay valid.
+    name: z.string().trim().max(60).optional(),
+    goal: z.enum(['lose', 'gain', 'recomp', 'maintain']).optional(),
+    sex: z.enum(['female', 'male']).optional(),
+    age: z.number().int().min(18).max(100).optional(),
+    activity: z.enum(['sedentary', 'light', 'moderate', 'active', 'very']).optional(),
+    fasting: z.enum(['none', 'wedfri', 'all']).optional(),
   }),
   weights: z.record(isoDate, num(30, 300)),
   logs: z.record(isoDate, dayLog),

@@ -1,7 +1,14 @@
-# እንጀራ (Injera)
+# Enjera (እንጀራ)
 
-Benji’s personal meal, workout and progress website, named after Ethiopia’s
-everyday flatbread: a seven-day Ethiopian meal
+A free meal, workout and progress app built on Ethiopian food, named after
+Ethiopia’s everyday flatbread. Anyone can create an account. New users answer a
+short setup (goal, sex, age, height, weight, activity, fasting days) and get
+daily targets (Mifflin-St Jeor) plus a seven-day Ethiopian meal plan scaled to
+them, with meat-, egg- and dairy-free meals on their fasting days
+(`public/plate/plans.js`). Accounts that already had history before this
+(Benji’s) keep the original hand-written plan until they choose a goal.
+
+The app includes the meal
 plan, a five-day training schedule with two recovery days, a food log with macro
 totals, weigh-ins, and walking and sleep check-ins.
 
@@ -22,7 +29,7 @@ Every log, weigh-in and backup is private to the signed-in account.
 | --- | --- |
 | Public home page and account pages (sign in, sign up, reset password) | `app/` (Next.js App Router) |
 | The meal and workout app: the original pages, kept as they were | `shell/index.html`, `shell/nutrition.html`, served only to signed-in users by `app/app/route.ts` and `app/app/nutrition/route.ts` |
-| App scripts and styles | `public/plate/` (`fitness.js`, `insights.js`, `app.js`, `visuals.js`, `merge.js`, `sync.js`, `importer.js`, `dates.js`, `fitness.css`, `extra.css`) |
+| App scripts and styles | `public/plate/` (`fitness.js`, `plans.js`, `insights.js`, `app.js`, `visuals.js`, `merge.js`, `sync.js`, `importer.js`, `dates.js`, `fitness.css`, `extra.css`) |
 | Records API | `app/api/progress/route.ts` (GET/PUT), `app/api/progress/validate/route.ts` (checks a backup without saving) |
 | Validation and save rules | `lib/progress/schema.ts`, `lib/progress/handler.ts` |
 | Database | `supabase/migrations/20261026000000_progress.sql` |
@@ -90,10 +97,12 @@ pnpm dev                         # http://localhost:3000
 
    The app already puts `?next=…` in the redirect address, which is why these links start with `&`. Unchanged default templates also work, but only when the link is opened in the same browser that asked for it.
 6. **Copy the keys.** In **Project Settings → API keys**, copy the Project URL and the **publishable** key into Vercel (see below). Never copy the secret or service-role key.
-7. **Optional, after creating your own account:** turn off **Allow new users to sign up** if nobody else should be able to create an account.
+7. **Keep sign-ups on.** The app is open to the public, so leave **Allow new users to sign up** enabled.
 
-The free email sender is rate limited to a few emails per hour. For dependable
-emails, set up custom SMTP under **Authentication → Emails → SMTP Settings**.
+**Required for public sign-ups:** Supabase’s built-in email sender only sends a
+few emails per hour, so new people would not receive confirmation emails. Set up
+custom SMTP (for example Resend, Brevo or Amazon SES) under **Authentication →
+Emails → SMTP Settings**.
 
 ## Vercel
 
@@ -107,7 +116,7 @@ emails, set up custom SMTP under **Authentication → Emails → SMTP Settings**
 ## Tests
 
 ```bash
-pnpm test        # unit: merge, import preview, dates, insights (trend, records, streaks)
+pnpm test        # unit: merge, import preview, dates, insights, meal plans and targets
 pnpm test:db     # PostgreSQL: the real migration + RLS + API handler
 pnpm typecheck && pnpm lint && pnpm build
 ```

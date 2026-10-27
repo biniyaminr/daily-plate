@@ -93,7 +93,7 @@
 
   async function readBackup(file) {
     if (!file) return { errors: ['No file selected.'] };
-    if (file.size > MAX_BYTES) return { errors: ['This file is larger than 5 MB, so it is not a Daily Plate backup.'] };
+    if (file.size > MAX_BYTES) return { errors: ['This file is larger than 5 MB, so it is not a backup from this app.'] };
     const text = await file.text();
     let backup;
     try { backup = JSON.parse(text); } catch { return { errors: ['This file is not valid JSON.'] }; }

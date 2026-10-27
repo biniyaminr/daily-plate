@@ -1,8 +1,16 @@
-# Benji’s Daily Plate
+# እንጀራ (Injera)
 
-Benji’s personal meal, workout and progress website: a seven-day Ethiopian meal
+Benji’s personal meal, workout and progress website, named after Ethiopia’s
+everyday flatbread: a seven-day Ethiopian meal
 plan, a five-day training schedule with two recovery days, a food log with macro
 totals, weigh-ins, and walking and sleep check-ins.
+
+It also works out, from what is logged (nothing extra is stored):
+- a smoothed **trend weight** and weekly rate, so daily water swings don’t mislead;
+- **lift records** (heaviest set, estimated 1-rep max), a **PR** badge on record sets and a
+  **next target** per exercise using double progression;
+- a **logging streak**, a Monday–Sunday consistency grid and a **weekly check-in**;
+- **recent foods** for one-tap adding and **copy yesterday’s meal** in the food log.
 
 Built with Next.js on Vercel, with Supabase for the database (PostgreSQL) and
 for email/password accounts. The public home page describes the site only.
@@ -14,7 +22,7 @@ Every log, weigh-in and backup is private to the signed-in account.
 | --- | --- |
 | Public home page and account pages (sign in, sign up, reset password) | `app/` (Next.js App Router) |
 | The meal and workout app: the original pages, kept as they were | `shell/index.html`, `shell/nutrition.html`, served only to signed-in users by `app/app/route.ts` and `app/app/nutrition/route.ts` |
-| App scripts and styles | `public/plate/` (`fitness.js`, `app.js`, `visuals.js`, `merge.js`, `sync.js`, `importer.js`, `dates.js`, `fitness.css`, `extra.css`) |
+| App scripts and styles | `public/plate/` (`fitness.js`, `insights.js`, `app.js`, `visuals.js`, `merge.js`, `sync.js`, `importer.js`, `dates.js`, `fitness.css`, `extra.css`) |
 | Records API | `app/api/progress/route.ts` (GET/PUT), `app/api/progress/validate/route.ts` (checks a backup without saving) |
 | Validation and save rules | `lib/progress/schema.ts`, `lib/progress/handler.ts` |
 | Database | `supabase/migrations/20261026000000_progress.sql` |
@@ -99,7 +107,7 @@ emails, set up custom SMTP under **Authentication → Emails → SMTP Settings**
 ## Tests
 
 ```bash
-pnpm test        # unit: merge, import preview, Addis Ababa date handling
+pnpm test        # unit: merge, import preview, dates, insights (trend, records, streaks)
 pnpm test:db     # PostgreSQL: the real migration + RLS + API handler
 pnpm typecheck && pnpm lint && pnpm build
 ```

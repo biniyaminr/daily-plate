@@ -4,7 +4,7 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }) {
   return (
     <header className="siteheader">
       <Link href="/" className="brand">
-        <span aria-hidden="true">◒</span> Benji’s Daily Plate
+        <span aria-hidden="true">◒</span> <span className="brandname" lang="am">እንጀራ</span>
       </Link>
       <nav aria-label="Site">
         <Link href="/">Home</Link>

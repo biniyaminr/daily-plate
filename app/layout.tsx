@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'Benji’s Daily Plate', template: '%s · Benji’s Daily Plate' },
-  description: 'Benji — meals, training and progress.',
+  title: { default: 'እንጀራ · Injera', template: '%s · እንጀራ' },
+  description: 'እንጀራ (Injera): Benji’s meals, training and progress.',
   icons: { icon: '/favicon.svg' },
   robots: { index: true, follow: false },
 };

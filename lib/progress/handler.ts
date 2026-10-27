@@ -157,7 +157,7 @@ export async function validateBackup(request: Request, deps: ProgressDeps): Prom
     return respond({
       valid: false,
       kinds: {},
-      errors: ['This is not a Daily Plate backup file (expected "version": 1).'],
+      errors: ['This is not a backup file from this app (expected "version": 1).'],
     });
   }
 

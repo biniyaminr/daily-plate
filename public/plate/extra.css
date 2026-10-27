@@ -93,3 +93,57 @@ nav .navmacros span:after{content:none}
 .fieldhint{display:block;font-weight:400;font-size:12px;color:#646d60;margin-top:4px}
 @media(max-width:760px){.movefig.thumb{width:52px;height:44px}.moveguide{padding:14px 14px 2px}}
 .moveframes svg{width:100%;max-height:170px}
+
+/* ---- Consistency: streak and week grid ---- */
+.habits{margin:0 0 22px}
+.habithead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.habithead h2{margin:6px 0 4px}
+.streakbadge{flex-shrink:0;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:#eef3e6;border:3px solid #749656;color:#31462c;font:700 22px/1 Georgia,serif}
+.streakbadge small{font:600 10px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.5px;color:#61704f;margin-top:-10px}
+.weekgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px}
+.weekcell{display:flex;flex-direction:column;align-items:center;gap:8px;min-height:64px;padding:10px 4px;border:1px solid #e3e7db;border-radius:12px;background:#fff;color:inherit;font:600 12px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;cursor:pointer}
+.weekcell.current{border-color:#486139;box-shadow:0 0 0 1px #486139}
+.weekcell .dots{display:flex;gap:4px}
+.weekcell i,.dotkey i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e4e8dc}
+.weekcell i.on,.dotkey i.on{background:#455c3f}
+.weekcell i.on+i.on,.dotkey i.on.p{background:#749656}
+.weekcell i:nth-child(2).on{background:#749656}
+.weekcell i:nth-child(3).on,.dotkey i.on.w{background:#bd8b43}
+.weekcell i.rest,.dotkey i.rest{background:#fff;border:2px solid #9589ab;width:9px;height:9px;box-sizing:border-box}
+.dotkey{display:flex;flex-wrap:wrap;gap:6px 16px;margin:12px 0 0}
+.dotkey span{display:inline-flex;align-items:center;gap:6px}
+
+/* ---- Workouts: targets, records, session summary ---- */
+.liftnote{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin:12px 0}
+.liftnote>div{padding:9px 12px;border-radius:10px;background:#f5f6ef;font-size:13px;line-height:1.45}
+.liftnote>div.up{background:#eef3e6;box-shadow:inset 3px 0 0 #749656}
+.liftnote b{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:#61704f}
+.liftnote.first{display:block}
+.prbadge{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:6px;background:#bd8b43;color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;vertical-align:middle}
+.prbadge[hidden]{display:none}
+.sessionsum{margin:16px 0 4px;padding:10px 12px;border-radius:10px;background:#eef3e6;color:#31462c;font-size:14px}
+
+/* ---- Progress: review and records ---- */
+.reviewnote{margin:-4px 0 6px}
+.records{display:grid;gap:0}
+.recordrow{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #eef0e8}
+.recordrow small{display:block;color:#7b8376;font-size:12px;margin-top:2px}
+.recordrow>div:last-child{text-align:right;flex-shrink:0}
+
+/* ---- Food log: recent foods ---- */
+.recent .label{margin-top:4px}
+.recentlist{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px}
+.recentfood{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:44px;padding:7px 10px;border:1px solid #e2e7df;border-radius:10px;background:#fff;color:inherit;text-align:left;font-size:13px}
+.recentfood:hover{background:#edf3e5}
+.recentfood small{color:#768077;font-size:11px}
+
+/* ---- Brand name in Ge'ez script ---- */
+.brand>span.brandname,.brand .brandname{background:none;color:inherit;padding:0;border-radius:0}
+.brandname{font-weight:600;font-family:"Noto Serif Ethiopic","Noto Sans Ethiopic","Kefa","Abyssinica SIL","Nyala",Georgia,serif;letter-spacing:0}
+
+@media(max-width:560px){
+  .weekgrid{gap:4px}
+  .weekcell{padding:8px 2px;font-size:11px}
+  .weekcell i{width:7px;height:7px}
+  .streakbadge{width:54px;height:54px;font-size:19px}
+}

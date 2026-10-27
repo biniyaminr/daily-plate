@@ -21,6 +21,11 @@ It also works out, from what is logged (nothing extra is stored):
   training volume, personal records, lift progress, trend weight change, food, walking and
   sleep, each compared with the previous period (or the same point in it, for a period in progress);
 - **recent foods** for one-tap adding and **copy yesterday’s meal** in the food log.
+- a **photo food log**: take or choose a photo in the food log and Claude (`claude-opus-5-5`,
+  `lib/food/claude.ts`) estimates each food, its portion and its macros. The person checks and
+  edits the estimate before anything is added. Photos are shrunk in the browser, sent once for
+  analysis and not stored. Each account gets 20 analyses a day (`use_ai_quota()` in
+  `supabase/migrations/20261028000000_ai_usage.sql`).
 
 Built with Next.js on Vercel, with Supabase for the database (PostgreSQL) and
 for email/password accounts. The public home page describes the site only.
@@ -100,7 +105,11 @@ pnpm dev                         # http://localhost:3000
 
    The app already puts `?next=…` in the redirect address, which is why these links start with `&`. Unchanged default templates also work, but only when the link is opened in the same browser that asked for it.
 6. **Copy the keys.** In **Project Settings → API keys**, copy the Project URL and the **publishable** key into Vercel (see below). Never copy the secret or service-role key.
-7. **Keep sign-ups on.** The app is open to the public, so leave **Allow new users to sign up** enabled.
+7. **Photo food log (optional).**
+   - In the **SQL Editor**, run `supabase/migrations/20261028000000_ai_usage.sql` (the daily limit).
+   - In Vercel → **Settings → Environment Variables**, add `ANTHROPIC_API_KEY` (from console.anthropic.com → API keys) for Production, then redeploy. It is read only on the server.
+   - Each analysis costs roughly US$0.01–0.03 in Claude API usage. Set a monthly spend limit in the Anthropic Console.
+8. **Keep sign-ups on.** The app is open to the public, so leave **Allow new users to sign up** enabled.
 
 **Required for public sign-ups:** Supabase’s built-in email sender only sends a
 few emails per hour, so new people would not receive confirmation emails. Set up

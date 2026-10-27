@@ -193,3 +193,34 @@ nav .navmacros span:after{content:none}
   .segmented{display:grid;grid-template-columns:repeat(3,1fr)}
   .periodnav{justify-content:space-between}
 }
+
+/* ---- Photo food log ---- */
+.snapcard{margin-bottom:16px;background:linear-gradient(160deg,#fff 55%,#f3ead3)}
+.snapcard h2{margin:6px 0 6px}
+.snappick{display:grid;gap:8px;margin-top:14px}
+.snapbtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:10px;cursor:pointer;font-weight:600;text-align:center}
+.ghostbtn{border:1.5px solid #cfd8c4;background:#fff;color:#38634c}
+.ghostbtn:hover{border-color:#38634c}
+.snapphoto{display:block;width:100%;max-height:260px;object-fit:cover;border-radius:12px;margin:14px 0 10px}
+.snapphoto.small{max-height:140px}
+#snapResult textarea{width:100%;min-height:60px;padding:10px;border:1px solid #e2e7df;border-radius:10px;font:inherit;resize:vertical}
+#snapResult select{width:100%}
+.snapopt{font-weight:400;color:#768077}
+.snapbuttons{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px}
+.snapbuttons .primary{flex:1}
+.snapprivacy{font-size:12px;color:#768077;margin:10px 0 0;line-height:1.5}
+.snapstatus{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:#eef3e6;font-size:13px}
+.snaperror{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:#fbecea;color:#7d2418;font-size:13px}
+.snapsummary{color:#253b31;font-size:14px;margin:0 0 10px}
+.snapitems{display:grid;gap:0;border-top:1px solid #f0f1ed}
+.snapitem{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"check name kcal" "check grams grams";align-items:center;gap:4px 10px;padding:10px 0;border-bottom:1px solid #f0f1ed}
+.snapcheck{grid-area:check;align-self:start;padding-top:2px}
+.snapcheck input{width:18px;height:18px;accent-color:#38634c}
+.snapname{grid-area:name;font-size:14px;min-width:0}
+.snapname small{display:block;color:#768077;font-size:11px;margin-top:2px}
+.snapkcal{grid-area:kcal;font-size:13px;font-weight:600;white-space:nowrap}
+.snapgrams{grid-area:grams;display:flex;align-items:center;gap:6px;font-size:12px;color:#768077}
+.snapgrams input{width:84px;min-height:36px;padding:4px 8px;border:1px solid #e2e7df;border-radius:8px}
+.conf{font-weight:600}.conf.high{color:#38634c}.conf.medium{color:#a57a1f}.conf.low{color:#a5452f}
+.snaptotal{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:#eef3e6;font-size:13px}
+.snaptips{margin:10px 0 0;padding-left:18px;font-size:13px;color:#4c5a4f;line-height:1.5}

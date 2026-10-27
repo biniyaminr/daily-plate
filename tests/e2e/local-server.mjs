@@ -8,6 +8,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { getProgress, putProgress, validateBackup } from '../../lib/progress/handler.ts';
+import { analyzePhoto } from '../../lib/food/analyze.ts';
 
 const root = path.resolve(import.meta.dirname, '../..');
 const port = Number(process.argv[2] ?? 3322);
@@ -64,6 +65,27 @@ createServer(async (req, res) => {
     }
     if (url.pathname === '/api/progress') {
       return send(res, req.method === 'GET' ? await getProgress(deps()) : await putProgress(await toWeb(req), deps()));
+    }
+    if (url.pathname === '/api/food/analyze') {
+      // Real handler, fixed sample answer: no model call from the test server.
+      return send(res, await analyzePhoto(await toWeb(req), {
+        getUserId: deps().getUserId,
+        configured: true,
+        useQuota: async () => true,
+        analyze: async ({ note }) => {
+          await new Promise((r) => setTimeout(r, 800));
+          return {
+            is_food: true,
+            meal_summary: `Sample analysis for testing${note ? ` (note: ${note})` : ''}: shiro wot and gomen on injera.`,
+            items: [
+              { name: 'Injera', local_name: 'እንጀራ', grams: 130, kcal_per_100g: 166, protein_per_100g: 5, carbs_per_100g: 34, fat_per_100g: 1, confidence: 'high', portion_note: 'one full round piece' },
+              { name: 'Shiro wot', local_name: 'ሽሮ ወጥ', grams: 150, kcal_per_100g: 140, protein_per_100g: 6, carbs_per_100g: 16, fat_per_100g: 6, confidence: 'medium', portion_note: 'about one ladle' },
+              { name: 'Gomen', local_name: 'ጎመን', grams: 80, kcal_per_100g: 50, protein_per_100g: 3, carbs_per_100g: 7, fat_per_100g: 2, confidence: 'low', portion_note: 'small side portion' },
+            ],
+            tips: ['Add a palm-sized portion of tibs or eggs to reach your protein target.'],
+          };
+        },
+      }));
     }
     if (url.pathname === '/api/progress/validate') return send(res, await validateBackup(await toWeb(req), deps()));
     if (url.pathname === '/app' || url.pathname === '/app/nutrition') {

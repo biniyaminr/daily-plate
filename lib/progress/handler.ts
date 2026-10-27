@@ -25,7 +25,7 @@ export interface ProgressDeps {
   store: ProgressStore | null;
 }
 
-const respond = (data: unknown, status = 200) =>
+export const respond = (data: unknown, status = 200) =>
   Response.json(data, {
     status,
     headers: { 'Cache-Control': 'private, no-store', Vary: 'Cookie' },
@@ -49,7 +49,7 @@ async function authorize(deps: ProgressDeps): Promise<Authorized> {
 }
 
 /** Same-origin JSON body, bounded by actual streamed bytes. */
-async function readJson(
+export async function readJson(
   request: Request,
   limit: number,
 ): Promise<{ response: Response } | { response?: undefined; body: unknown }> {

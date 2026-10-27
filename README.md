@@ -17,6 +17,9 @@ It also works out, from what is logged (nothing extra is stored):
 - **lift records** (heaviest set, estimated 1-rep max), a **PR** badge on record sets and a
   **next target** per exercise using double progression;
 - a **logging streak**, a Monday–Sunday consistency grid and a **weekly check-in**;
+- a **Reports** page with weekly, monthly and yearly summaries: workouts against plan, sets,
+  training volume, personal records, lift progress, trend weight change, food, walking and
+  sleep, each compared with the previous period (or the same point in it, for a period in progress);
 - **recent foods** for one-tap adding and **copy yesterday’s meal** in the food log.
 
 Built with Next.js on Vercel, with Supabase for the database (PostgreSQL) and
@@ -116,7 +119,7 @@ Emails → SMTP Settings**.
 ## Tests
 
 ```bash
-pnpm test        # unit: merge, import preview, dates, insights, meal plans and targets
+pnpm test        # unit: merge, import preview, dates, insights, reports, meal plans and targets
 pnpm test:db     # PostgreSQL: the real migration + RLS + API handler
 pnpm typecheck && pnpm lint && pnpm build
 ```

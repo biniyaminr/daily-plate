@@ -170,5 +170,103 @@
     };
   }
 
-  globalThis.Insights = { trend, weeklyRate, e1rm, sessions, records, isRecord, repRange, nextTarget, streak, week, review, active };
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const monthDays = (y, m) => new Date(Date.UTC(y, m, 0)).getUTCDate(); // m is 1-based
+
+  /** The week (Monday start), month or year holding `anchor`, `shift` periods away. */
+  function period(kind, anchor, shift = 0) {
+    let [y, m] = anchor.split('-').map(Number);
+    if (kind === 'week') {
+      const from = addDays(addDays(anchor, -weekday(anchor)), shift * 7), to = addDays(from, 6);
+      return { kind, from, to, label: `${from} to ${to}` };
+    }
+    if (kind === 'month') {
+      const index = y * 12 + (m - 1) + shift;
+      y = Math.floor(index / 12); m = (index % 12) + 1;
+      const mm = String(m).padStart(2, '0');
+      return { kind, from: `${y}-${mm}-01`, to: `${y}-${mm}-${monthDays(y, m)}`, label: `${MONTHS[m - 1]} ${y}` };
+    }
+    y += shift;
+    return { kind, from: `${y}-01-01`, to: `${y}-12-31`, label: String(y) };
+  }
+
+  /**
+   * Totals for one period. Days after `today` are ignored, so a period in
+   * progress is compared fairly. Weight change uses the smoothed trend.
+   */
+  function report(fitness, nutrition, training, goals, p, today) {
+    const end = p.to < today ? p.to : today;
+    const logs = fitness.logs || {};
+    const r = {
+      days: 0, activeDays: 0, workouts: 0, planned: 0, sets: 0, volume: 0, walk: 0, walkDays: 0, sleep: 0, sleepDays: 0,
+      foodDays: 0, kcal: 0, protein: 0, proteinDays: 0, weighIns: 0, bestStreak: 0, prs: 0, buckets: [], lifts: [],
+    };
+    const bucketOf = (d) => (p.kind === 'year' ? Number(d.slice(5, 7)) - 1 : daysBetween(p.from, d));
+    const count = p.kind === 'year' ? 12 : daysBetween(p.from, p.to) + 1;
+    r.buckets = Array.from({ length: count }, (_, i) => ({
+      label: p.kind === 'year' ? MONTHS[i].slice(0, 3) : p.kind === 'week' ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][i] : String(i + 1),
+      workouts: 0, volume: 0,
+    }));
+    // Days before someone started (their start date or first record, whichever is earlier) don't count.
+    const first = [fitness.profile?.start, ...Object.keys(logs), ...Object.keys(fitness.weights || {}), ...Object.keys(nutrition?.days || {})]
+      .filter(Boolean).sort()[0];
+    r.from = first && first > p.from ? first : p.from;
+    let run = 0;
+    for (let d = r.from; d <= end; d = addDays(d, 1)) {
+      r.days++;
+      const log = logs[d], rows = foodRows(nutrition, d), b = r.buckets[bucketOf(d)];
+      if (active(fitness, nutrition, d)) { r.activeDays++; run++; r.bestStreak = Math.max(r.bestStreak, run); } else run = 0;
+      if (training[weekday(d)][1].length && !log?.recovery) r.planned++;
+      if (trained(log)) { r.workouts++; b.workouts++; }
+      for (const s of Object.values(log?.sets || {})) {
+        if (!(s.done || s.reps > 0)) continue;
+        r.sets++;
+        const v = (Number(s.kg) || 0) * (Number(s.reps) || 0);
+        r.volume += v; b.volume += v;
+      }
+      if (log?.walk > 0) { r.walk += log.walk; r.walkDays++; }
+      if (log?.sleep > 0) { r.sleep += log.sleep; r.sleepDays++; }
+      if (rows.length) {
+        const t = totals(rows);
+        r.foodDays++; r.kcal += t[0]; r.protein += t[1];
+        if (t[1] >= goals[1] * 0.9) r.proteinDays++;
+      }
+      if (fitness.weights?.[d] != null) r.weighIns++;
+    }
+    r.walkAvg = r.walkDays ? r.walk / r.walkDays : null;
+    r.sleepAvg = r.sleepDays ? r.sleep / r.sleepDays : null;
+    r.kcalAvg = r.foodDays ? r.kcal / r.foodDays : null;
+    r.proteinAvg = r.foodDays ? r.protein / r.foodDays : null;
+
+    const t = trend(fitness.weights).filter(([d]) => d <= end);
+    const inside = t.filter(([d]) => d >= p.from);
+    const before = t.filter(([d]) => d < p.from).at(-1);
+    r.weightStart = before ? before[1] : inside[0]?.[1] ?? null;
+    r.weightEnd = inside.at(-1)?.[1] ?? null;
+    r.weightChange = r.weightStart != null && r.weightEnd != null && (before || inside.length > 1) ? round(r.weightEnd - r.weightStart, 2) : null;
+    r.sinceStart = r.weightEnd != null ? round(r.weightEnd - fitness.profile.weight, 2) : null;
+
+    // Lifts trained in the period: best estimated max now against the best before it.
+    for (const name of [...new Set(training.flatMap((x) => x[1].map((e) => e[0])))]) {
+      const all = sessions(logs, training, name).filter((x) => x.date <= end);
+      const during = all.filter((x) => x.date >= p.from);
+      if (!during.length) continue;
+      let best = records(all.filter((x) => x.date < p.from));
+      const earlier = best.e1rm?.value ?? null;
+      for (const sess of during) {
+        const prior = all.filter((x) => x.date < sess.date);
+        sess.sets.forEach((set, i) => {
+          // Count against the best so far, including earlier sets in the same session.
+          if (prior.length && isRecord(set, best)) r.prs++; // the first session is the baseline
+          best = records([...prior, { date: sess.date, sets: sess.sets.slice(0, i + 1) }]);
+        });
+      }
+      const now = records(during);
+      r.lifts.push({ name, sessions: during.length, best: now.heaviest || now.reps, e1rm: now.e1rm?.value ?? null, before: earlier, change: earlier && now.e1rm ? round(now.e1rm.value - earlier, 1) : null });
+    }
+    r.lifts.sort((a, b) => (b.change ?? -1e9) - (a.change ?? -1e9) || b.sessions - a.sessions);
+    return r;
+  }
+
+  globalThis.Insights = { trend, weeklyRate, e1rm, sessions, records, isRecord, repRange, nextTarget, streak, week, review, active, period, report };
 })();

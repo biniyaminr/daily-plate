@@ -169,3 +169,27 @@ nav .navmacros span:after{content:none}
 .plantotal{margin:4px 0 12px;font-weight:600;color:#31462c}
 .fastbadge{display:inline-block;margin-left:4px;padding:2px 10px;border-radius:999px;background:#eef3e6;border:1px solid #c8d6b4;font-size:12px;font-weight:600}
 .mealkcal{display:block;margin:2px 0 6px;color:#61704f;font-size:12px;font-weight:600}
+
+/* ---- Reports ---- */
+.reportbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin:0 0 18px}
+.segmented{display:inline-flex;padding:4px;border:1px solid #e3e7db;border-radius:12px;background:#fff}
+.segmented button{min-height:40px;padding:0 16px;border:0;border-radius:9px;background:none;color:inherit;font:600 14px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;cursor:pointer}
+.segmented button[aria-pressed=true]{background:#486139;color:#fff}
+.periodnav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.periodnav strong{font:600 18px Georgia,serif;min-width:9ch;text-align:center}
+.periodnav .plain{min-width:40px;min-height:40px;font-size:22px;border-radius:10px}
+.periodnav .plain:disabled{opacity:.3;cursor:default}
+.reportsummary{font-size:16px;line-height:1.6;margin:0 0 18px}
+.delta{font-weight:600;color:#6b7466}
+.delta.good{color:#3f6b2b}
+.delta.bad{color:#a5452f}
+.volumechart{width:100%;height:auto;margin:6px 0 14px}
+.volumechart text{font-size:12px;fill:#7b8376}
+
+@media(max-width:760px){
+  .sidebar nav{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  .sidebar nav button,.sidebar nav a{justify-content:center}
+  .reportbar{flex-direction:column;align-items:stretch}
+  .segmented{display:grid;grid-template-columns:repeat(3,1fr)}
+  .periodnav{justify-content:space-between}
+}

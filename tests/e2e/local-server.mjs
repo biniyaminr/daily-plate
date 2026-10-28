@@ -92,7 +92,7 @@ createServer(async (req, res) => {
       const file = url.pathname === '/app' ? 'index.html' : 'nutrition.html';
       const html = (await readFile(path.join(root, 'shell', file), 'utf8')).replace(
         '</head>',
-        `<meta name="plate-user" content="00000000-0000-4000-8000-0000000000be"><meta name="plate-email" content="benji@test.local"></head>`,
+        `<meta name="plate-user" content="00000000-0000-4000-8000-0000000000be"><meta name="plate-email" content="benji@test.local"><meta name="plate-photo" content="on"></head>`,
       );
       res.writeHead(200, { 'content-type': types['.html'], 'cache-control': 'no-store' });
       return res.end(html);

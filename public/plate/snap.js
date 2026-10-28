@@ -3,6 +3,8 @@
 // The photo is not stored.
 (() => {
   const $ = (id) => document.getElementById(id);
+  // The server adds this tag only when photo analysis is switched on.
+  if (!document.querySelector('meta[name="plate-photo"]')) { $('snapcard')?.remove(); return; }
   const box = $('snapResult');
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
   const MAX_SIDE = 1280;

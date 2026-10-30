@@ -1,6 +1,6 @@
 const $=id=>document.getElementById(id);
 const foods=[['Chicken breast · cooked',165,31,0,3.6],['Egg · boiled',155,12.6,1.1,10.6],['Oats · dry',389,16.9,66.3,6.9],['Banana',89,1.1,22.8,.3],['Injera · teff, estimated',166,5,34,1],['Shiro · prepared, estimated',140,6,16,6],['Rice · cooked',130,2.7,28.2,.3],['Lentils · cooked',116,9,20.1,.4],['Beef · lean, cooked',217,26,0,12],['Greek yogurt · plain, nonfat',59,10.3,3.6,.4],['Avocado',160,2,8.5,14.7],['Sweet potato · boiled',76,1.4,17.7,.1],['Broccoli · cooked',35,2.4,7.2,.4],['Milk · whole',61,3.2,4.8,3.3],['Peanut butter',588,25,20,50],['Olive oil',884,0,0,100],['Apple',52,.3,13.8,.2],['Chickpeas · cooked',164,8.9,27.4,2.6],['Salad · tomato & cucumber',20,1,4,.2],['Salmon · cooked',206,22,0,12]];
-const names=['Breakfast','Lunch','Dinner','Snacks'],icons=['☀','◐','☾','✧'];
+const names=['Breakfast','Lunch','Dinner','Snacks'],icons=['sunrise','sun','moon','snack'].map((n)=>PlateIcon(n));
 let state={goals:[2100,185,185,70],days:{}},selected=0,custom=false;
 try{let saved=JSON.parse(PlateStorage.getItem('dailyPlate.v1'));if(saved&&Array.isArray(saved.goals)&&saved.goals.length===4&&saved.goals.every(x=>Number.isFinite(x)&&x>0)&&saved.days&&typeof saved.days==='object')state=saved;}catch{}
 const today=PlateDate.today();$('date').value=today;
